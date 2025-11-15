@@ -1,4 +1,4 @@
-﻿// Enhanced animations and smooth scroll behavior for RunwayML-inspired design
+// Enhanced animations and smooth scroll behavior for RunwayML-inspired design
 document.addEventListener('DOMContentLoaded', function() {
   
   // Initialize theme toggle
@@ -32,7 +32,14 @@ function initializeThemeToggle() {
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = document.querySelector('.theme-icon');
   
-  if (!themeToggle) return;
+  if (!themeToggle || !themeIcon) return;
+
+  const sunEmoji = '☀️';
+  const moonEmoji = '🌙';
+
+  const setIcon = (mode) => {
+    themeIcon.textContent = mode === 'light' ? sunEmoji : moonEmoji;
+  };
   
   // Check for saved theme preference or default to 'dark'
   const currentTheme = localStorage.getItem('theme') || 'dark';
@@ -40,9 +47,9 @@ function initializeThemeToggle() {
   // Apply saved theme on page load
   if (currentTheme === 'light') {
     document.body.classList.add('light-mode');
-    themeIcon.textContent = '☀️';
+    setIcon('light');
   } else {
-    themeIcon.textContent = '🌙';
+    setIcon('dark');
   }
   
   // Toggle theme on button click
@@ -51,10 +58,10 @@ function initializeThemeToggle() {
     
     // Update icon and save preference
     if (document.body.classList.contains('light-mode')) {
-      themeIcon.textContent = '☀️';
+      setIcon('light');
       localStorage.setItem('theme', 'light');
     } else {
-      themeIcon.textContent = '🌙';
+      setIcon('dark');
       localStorage.setItem('theme', 'dark');
     }
   });
@@ -558,8 +565,6 @@ if (document.readyState === 'loading') {
 } else {
   initializeContactForms();
 }
-
-
 
 
 
