@@ -32,3 +32,25 @@ const CONTACT_CONFIG = {
 
 // Make configuration available globally
 window.CONTACT_CONFIG = CONTACT_CONFIG;
+
+// Update any WhatsApp links declared with data attributes
+(function attachWhatsAppLinks() {
+  const applyWhatsAppLinks = () => {
+    const number = CONTACT_CONFIG?.whatsapp?.number;
+    if (!number) return;
+
+    const links = document.querySelectorAll('[data-whatsapp-link]');
+    links.forEach(link => {
+      const message = link.dataset.message
+        ? `?text=${encodeURIComponent(link.dataset.message)}`
+        : '';
+      link.setAttribute('href', `https://wa.me/${number}${message}`);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyWhatsAppLinks);
+  } else {
+    applyWhatsAppLinks();
+  }
+})();
